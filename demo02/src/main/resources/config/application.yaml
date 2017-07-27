@@ -1,0 +1,10 @@
+weituitu:
+  secret: ${random.value}
+  number: ${random.int}
+  name: www.weituitu.com
+  desc: the domain is ${weituitu.name}
+
+#应用端口
+server:
+  port: 80
+
