@@ -3,9 +3,7 @@ package com.weituitu.demo04.bean;
 
 import java.util.Date;
 
-/**
- * 实体类
- */
+
 public class User {
     private int id;
     private String name;

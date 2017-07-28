@@ -1,4 +1,4 @@
-package com.weituitu.demo01;
+package com.weituitu.demo07;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

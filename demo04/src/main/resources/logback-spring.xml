@@ -15,9 +15,10 @@
             </encoder>
         </appender>
 
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="STDOUT"/>
         </root>
+
     </springProfile>
 
     <!-- 测试环境 -->
@@ -25,16 +26,16 @@
         <!-- 每天产生一个文件 -->
         <appender name="TEST-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <!-- 文件路径 -->
-            <file>${TEST_FILE_PATH}</file>
+            <file>${user.home}/test/logs</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 文件名称 -->
-                <fileNamePattern>${TEST_FILE_PATH}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${user.home}/test/logs/otherdays/info.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 文件最大保存历史数量 -->
                 <MaxHistory>100</MaxHistory>
             </rollingPolicy>
 
             <layout class="ch.qos.logback.classic.PatternLayout">
-                <pattern>${PATTERN}</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:-} --- [%15.15t] %-40.40logger{39} : %m%n</pattern>
             </layout>
         </appender>
 
@@ -46,10 +47,10 @@
     <!-- 生产环境 -->
     <springProfile name="prod">
         <appender name="PROD_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${user.home}/logs/warn.log</file>
+            <file>${user.home}/pro/logs/warn.log</file>
             <append>true</append>
             <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                <fileNamePattern>${user.home}/logs/warn.%i.%i.log
+                <fileNamePattern>${user.home}/pro/logs/otherdays/warn.%i.%i.log
                 </fileNamePattern>
                 <minIndex>1</minIndex>
                 <maxIndex>20</maxIndex>

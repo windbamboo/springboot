@@ -1,10 +1,10 @@
 
-package com.weituitu.demo01.controller;
+package com.weituitu.demo07.web.controller;
 
 import java.util.Date;
 import java.util.HashMap;
 
-import com.weituitu.demo01.bean.User;
+import com.weituitu.demo07.bean.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-/**
- * spring-boot-demo-2-1
- *
- * @author wujing
- */
+
 @RestController
 public class IndexController {
 

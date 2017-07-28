@@ -1,13 +1,9 @@
 
-package com.weituitu.demo01.bean;
+package com.weituitu.demo07.bean;
 
 import java.util.Date;
 
-/**
- * 实体类
- * 
- * @author wujing
- */
+
 public class User {
 	private int id;
 	private String name;

@@ -1,15 +1,15 @@
 
-package com.weituitu.demo02.controller;
+package com.weituitu.demo07.web.controller;
 
-import com.weituitu.demo02.bean.User;
+import java.util.Date;
+import java.util.HashMap;
+
+import com.weituitu.demo07.bean.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-import java.util.HashMap;
 
 
 
@@ -22,6 +22,17 @@ public class IndexController {
     @Value(value = "${weituitu.number}")
     private int number;
 
+    @Value(value = "${weituitu.bignumber}")
+    private long bigNumber;
+
+    @Value(value = "${weituitu.number.less.than.ten}")
+    private long lessThanTen;
+
+
+    @Value(value = "${weituitu.number.in.range}")
+    private long rangeNumber;
+
+
     @Value(value = "${weituitu.desc}")
     private String desc;
 
@@ -29,6 +40,9 @@ public class IndexController {
     public String home() {
         System.out.println(secret);
         System.out.println(number);
+        System.out.println(bigNumber);
+        System.out.println(lessThanTen);
+        System.out.println(rangeNumber);
         System.out.println(desc);
         return "Hello World!";
     }

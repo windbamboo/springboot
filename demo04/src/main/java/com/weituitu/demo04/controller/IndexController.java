@@ -14,11 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 
-/**
- * spring-boot-demo-2-1
- *
- * @author wujing
- */
+
 @RestController
 public class IndexController {
 
