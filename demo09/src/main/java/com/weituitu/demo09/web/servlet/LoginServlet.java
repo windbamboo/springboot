@@ -1,4 +1,4 @@
-package com.weituitu.demo08.web.servlet;
+package com.weituitu.demo09.web.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +10,7 @@ import java.io.IOException;
 /**
  *
  */
+@WebServlet(name = "loginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
     @Override

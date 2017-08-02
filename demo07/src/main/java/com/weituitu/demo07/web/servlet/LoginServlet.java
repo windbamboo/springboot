@@ -10,7 +10,6 @@ import java.io.IOException;
 /**
  *
  */
-@WebServlet(name = "loginServlet")
 public class LoginServlet extends HttpServlet {
 
     @Override
