@@ -2,11 +2,11 @@
 package com.weituitu.demo10.web.controller;
 
 import com.weituitu.demo10.bean.User;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.HashMap;
 
 
 @RestController
