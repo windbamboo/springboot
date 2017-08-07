@@ -19,6 +19,7 @@
         <module>demo08</module>
         <module>demo09</module>
         <module>demo10</module>
+        <module>demo11</module>
     </modules>
 
     <properties>
