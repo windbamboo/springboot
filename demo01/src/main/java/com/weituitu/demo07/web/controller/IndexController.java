@@ -3,14 +3,17 @@ package com.weituitu.demo07.web.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import com.weituitu.demo07.bean.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.context.request.async.DeferredResult;
 
 
 @RestController
@@ -69,6 +72,36 @@ public class IndexController {
         user.setName(name);
         user.setDate(new Date());
         return user;
+    }
+
+    private static final long TIMEOUT = 10 * 1000;//30 seconds
+    private static final ResponseEntity<String> NOT_MODIFIED_RESPONSE_LIST = new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+
+
+    @RequestMapping(value = "/getCurrentLoginUser")
+    public DeferredResult<ResponseEntity<String>> getCurrentLoginUser() {
+        System.out.println("=====================");
+        DeferredResult<ResponseEntity<String>> deferredResult = new DeferredResult<>(TIMEOUT, NOT_MODIFIED_RESPONSE_LIST);
+        System.out.println("1===" + Thread.currentThread());
+        //定时任务获取消息
+        // deferredResult.setResult(ResponseEntity.ok("success"));
+        deferredResult.onTimeout(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("2===" + Thread.currentThread());
+                deferredResult.setResult(ResponseEntity.ok("time out"));
+                System.out.println("time out");
+            }
+        });
+        deferredResult.onCompletion(new Runnable() {
+            @Override
+            public void run() {
+                //deferredResult.setResult(ResponseEntity.ok("success!!!"));
+                System.out.println("-------------------------");
+            }
+        });
+        System.out.println("3===" + Thread.currentThread());
+        return deferredResult;
     }
 
 }
