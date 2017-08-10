@@ -4,6 +4,8 @@ package com.weituitu.demo07.web.controller;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.weituitu.demo07.bean.User;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -38,6 +42,11 @@ public class IndexController {
 
     @Value(value = "${weituitu.desc}")
     private String desc;
+
+    /**
+     * appId:用户id 结果
+     */
+    private static final ConcurrentHashMap<String, DeferredResult<ResponseEntity<String>>> RESULTS = new ConcurrentHashMap<>();
 
     @RequestMapping(value = "home")
     public String home() {
@@ -74,21 +83,37 @@ public class IndexController {
         return user;
     }
 
-    private static final long TIMEOUT = 10 * 1000;//30 seconds
+
+    @RequestMapping(value = "setUser")
+    public String setUser() {
+        for (Map.Entry<String, DeferredResult<ResponseEntity<String>>> entry : RESULTS.entrySet()) {
+            entry.getValue().setResult(ResponseEntity.ok("success1"));
+        }
+        return "success";
+    }
+
+    @RequestMapping(value = "setUser2")
+    public String setUser2() {
+        for (Map.Entry<String, DeferredResult<ResponseEntity<String>>> entry : RESULTS.entrySet()) {
+            entry.getValue().setResult(ResponseEntity.ok("success2"));
+        }
+        return "success";
+    }
+
+
+    private static final long TIMEOUT = 30 * 1000;//30 seconds
     private static final ResponseEntity<String> NOT_MODIFIED_RESPONSE_LIST = new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
 
 
     @RequestMapping(value = "/getCurrentLoginUser")
-    public DeferredResult<ResponseEntity<String>> getCurrentLoginUser() {
-        System.out.println("=====================");
+    public DeferredResult<ResponseEntity<String>> getCurrentLoginUser(HttpServletRequest request) {
+
         DeferredResult<ResponseEntity<String>> deferredResult = new DeferredResult<>(TIMEOUT, NOT_MODIFIED_RESPONSE_LIST);
-        System.out.println("1===" + Thread.currentThread());
-        //定时任务获取消息
-        // deferredResult.setResult(ResponseEntity.ok("success"));
+        String sessionId = request.getSession().getId();
+        RESULTS.put(sessionId, deferredResult);
         deferredResult.onTimeout(new Runnable() {
             @Override
             public void run() {
-                System.out.println("2===" + Thread.currentThread());
                 deferredResult.setResult(ResponseEntity.ok("time out"));
                 System.out.println("time out");
             }
@@ -96,11 +121,9 @@ public class IndexController {
         deferredResult.onCompletion(new Runnable() {
             @Override
             public void run() {
-                //deferredResult.setResult(ResponseEntity.ok("success!!!"));
-                System.out.println("-------------------------");
+                RESULTS.remove(sessionId);
             }
         });
-        System.out.println("3===" + Thread.currentThread());
         return deferredResult;
     }
 
